@@ -12,7 +12,7 @@ class Task(models.Model):
 
     title = models.CharField(max_length=200)
     description = models.TextField()  # for large amounts of text
-    priority = models.CharField(max_length=1, choices=Priority_choices, defaults='M')
+    priority = models.CharField(max_length=1, choices=Priority_choices, default='M')
     due_date = models.DateTimeField(default=timezone.now)
     completed = models.BooleanField(default=False)
 
@@ -21,3 +21,6 @@ class Task(models.Model):
 
 def _str_(self):
     return self.title
+
+# Create database table for the models: `python manage.py makemigrations`
+# Followed by `python manage.py migrate`
