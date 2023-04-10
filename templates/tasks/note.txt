@@ -1,0 +1,43 @@
+Base.html
+The {% block %} tags are used to define sections of the template that can be overridden by child templates. The child templates extend the base.html file and fill in the content of the blocks with their own content.
+In this example, the title block is left empty by default, allowing child templates to set their own title. The content block is where the main content of the page is inserted, and the navigation menu and footer are included in the base layout.
+-------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel='stylesheet' href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="{% url 'task_list' %}">Task List</a></li>
+        <li><a href="{% url 'task_create' %}">Create task</a></li>
+    </ul>
+</nav>
+<main>
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    <p>&copy; 2023 My Todo App</p>
+</footer>
+</body>
+</html>
+-------------------------------------
+{% extends base.html %}
+<! This template display a list of all tasks>
+
+{% block content %}
+<h1>Task List</h1>
+<ul>
+    {% for task in tasks %}
+        <li><a href="{% url 'task_detail' task.pk %}"{{ task.title }}></a></li>
+    {% endfor %}
+    <! Using `for` lopp to iterate over all tasks and display them in list.>
+    <! Each task is linked to its detail view using task's primary key (pk)
+</ul>
+<a href="{% url 'task_create' %}">Create New Task</a>
+
+{% endblock %}
